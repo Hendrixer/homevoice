@@ -1,4 +1,4 @@
-export const FETCH = 'FETCH';
+export const TOGGLE_FETCH = 'TOGGLE_FETCH';
 export const RECEIVE_DEVICES = 'RECEIVE_DEVICES';
 export const UPDATE_DEVICE = 'UPDATE_DEVICE';
 export const RECEIVE_USER_CONFIG = 'RECEIVE_USER_CONFIG';

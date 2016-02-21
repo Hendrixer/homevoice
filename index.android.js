@@ -13,33 +13,22 @@ import React, {
   Text,
   View
 } from 'react-native';
-
-
-
-class Main extends Component {
-  render() {
-    return (
-      <View style={{flex: 1, alignItems: 'center'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>
-          {this.props.route.title}
-        </Text>
-      </View>
-    );
-  }
-}
+import Splash from './app/containers/Splash';
+import Auth from './app/containers/Auth';
+import { Provider } from 'react-redux';
+import store from './app/store/store';
+import * as routes from './app/utils/routes';
 
 class App extends Component {
   _renderScene = (route, navigator) => {
-    if (route.id === 1) {
-      return <Main route={route}/>
+    if (route.name === routes.SPLASH) {
+      return <Splash route={route} nav={navigator}/>
+
+    } else if (route.name === routes.AUTH) {
+      return <Auth route={route} nav={navigator}/>
+
     } else {
-      return (
-        <View>
-          <Text>
-            Default
-          </Text>
-        </View>
-      );
+      return <Splash route={route} nav={navigator}/>
     }
   };
 
@@ -52,16 +41,17 @@ class App extends Component {
       </View>
     );
     return (
-
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={() => navView}>
-        <Navigator
-          initialRoute={{id: 1, title: 'Main'}}
-          renderScene={this._renderScene}
-        />
-      </DrawerLayoutAndroid>
+      <Provider store={store}>
+        <DrawerLayoutAndroid
+          drawerWidth={300}
+          drawerPosition={DrawerLayoutAndroid.positions.Left}
+          renderNavigationView={() => navView}>
+          <Navigator
+            initialRoute={{name: routes.SPLASH, title: 'Main'}}
+            renderScene={this._renderScene}
+          />
+        </DrawerLayoutAndroid>
+      </Provider>
     );
   }
 }

@@ -10,8 +10,10 @@
     "lodash": "^4.5.0",
     "react": "^0.14.7",
     "react-native": "^0.20.0",
+    "react-native-spinkit": "0.0.7",
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
+    "redux-logger": "^2.5.2",
     "redux-thunk": "^1.0.3"
   }
 }
