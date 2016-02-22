@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Spinner from 'react-native-spinkit';
 import { load_jwt } from '../actions/creators';
 import { AUTH } from '../utils/routes';
+import { toggle_fetch } from '../actions/actions';
 
 class Splash extends Component {
   constructor(props) {
@@ -14,16 +15,19 @@ class Splash extends Component {
   }
 
   componentDidMount() {
-    this.props.load_jwt()
-    .then(jwt => {
-      if (!jwt) {
-        this.props.nav.resetTo({
-          name: AUTH,
-          title: 'Sign in'
-        });
-      }
-    })
-    .done();
+    this.props.startSplash();
+    setTimeout(() => {
+      this.props.load_jwt()
+      .then(jwt => {
+        if (!jwt) {
+          this.props.nav.push({
+            name: AUTH,
+            title: 'Sign in'
+          });
+        }
+      })
+      .done();
+    }, 3000);
   }
   render() {
     return(
@@ -72,6 +76,9 @@ const selectActions = (dispatch, props) => {
   return {
     load_jwt() {
       return dispatch(load_jwt());
+    },
+    startSplash() {
+      return dispatch(toggle_fetch(true, 'Loading...'));
     }
   };
 };

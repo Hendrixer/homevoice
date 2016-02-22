@@ -5,3 +5,4 @@ export const RECEIVE_USER_CONFIG = 'RECEIVE_USER_CONFIG';
 export const RECEIVE_JWT = 'RECEIVE_JWT';
 export const RECEIVE_BOX_ID = 'RECEIVE_BOX_ID';
 export const HTTP_ERROR = 'HTTP_ERROR';
+export const UPDATE_FORM = 'UPDATE_FORM';

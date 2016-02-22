@@ -1,12 +1,28 @@
 import {
   RECEIVE_JWT,
-  TOGGLE_FETCH
+  TOGGLE_FETCH,
+  UPDATE_FORM
 } from '../actions/types';
 
 export default function(state={
-  is_fetching: false
+  is_fetching: false,
+  forms: {
+    sign_in: {},
+    sign_up: {}
+  }
 }, action) {
   switch(action.type) {
+    case UPDATE_FORM:
+      return {
+        ...state,
+        forms: {
+          ...state.forms,
+          [action.form_name]: {
+            ...state.forms[action.form_name],
+            ...action.inputs
+          }
+        }
+      };
     case RECEIVE_JWT:
       return {
         ...state,

@@ -18,6 +18,7 @@ import Auth from './app/containers/Auth';
 import { Provider } from 'react-redux';
 import store from './app/store/store';
 import * as routes from './app/utils/routes';
+import PageAnimation from './app/utils/pageAnimations';
 
 class App extends Component {
   _renderScene = (route, navigator) => {
@@ -32,6 +33,10 @@ class App extends Component {
     }
   };
 
+  _configureScene = () => {
+    return PageAnimation();
+  };
+
   render() {
     const navView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -40,6 +45,7 @@ class App extends Component {
         </Text>
       </View>
     );
+
     return (
       <Provider store={store}>
         <DrawerLayoutAndroid
@@ -49,6 +55,7 @@ class App extends Component {
           <Navigator
             initialRoute={{name: routes.SPLASH, title: 'Main'}}
             renderScene={this._renderScene}
+            configureScene={this._configureScene}
           />
         </DrawerLayoutAndroid>
       </Provider>
@@ -61,11 +68,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
- },
- thumbnail: {
-  width: 53,
-  height: 81
- }
+  },
+  thumbnail: {
+    width: 53,
+    height: 81
+  }
 });
 
 AppRegistry.registerComponent('AwesomeProject', () => App);

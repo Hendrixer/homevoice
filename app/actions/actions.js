@@ -4,7 +4,8 @@ import {
   UPDATE_DEVICE,
   RECEIVE_JWT,
   RECEIVE_USER_CONFIG,
-  RECEIVE_BOX_ID
+  RECEIVE_BOX_ID,
+  UPDATE_FORM
 } from './types';
 
 // export const http_error = (resp) => {
@@ -12,6 +13,14 @@ import {
 
 //   };
 // };
+
+export const update_form = (form_name, inputs) => {
+  return {
+    type: UPDATE_FORM,
+    form_name,
+    inputs
+  };
+};
 
 export const receive_devices = (devices) => {
   return {
