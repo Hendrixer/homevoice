@@ -8,6 +8,8 @@ import Spinner from 'react-native-spinkit';
 import { load_jwt } from '../actions/creators';
 import { AUTH } from '../utils/routes';
 import { toggle_fetch } from '../actions/actions';
+import LinearGradient from 'react-native-linear-gradient';
+import gradients from '../utils/gradients';
 
 class Splash extends Component {
   constructor(props) {
@@ -16,11 +18,12 @@ class Splash extends Component {
 
   componentDidMount() {
     this.props.startSplash();
+    const navigator = this.props.nav;
     setTimeout(() => {
       this.props.load_jwt()
       .then(jwt => {
         if (!jwt) {
-          this.props.nav.push({
+          navigator.push({
             name: AUTH,
             title: 'Sign in'
           });
@@ -29,31 +32,34 @@ class Splash extends Component {
       .done();
     }, 3000);
   }
+
   render() {
     return(
-      <View style={styles.view}>
+      <LinearGradient
+        style={styles.view}
+        colors={gradients.america}>
         <View styl={styles.logoContainer}>
-          <Text style={styles.logo}>Splash</Text>
+          <Text style={styles.logo}>Logo here</Text>
         </View>
         <View styl={styles.spinner}>
           <Spinner
             isVisible={this.props.is_fetching}
-            color={'#000'}
-            size={50}
+            color={'#fff'}
+            size={80}
             type={'ThreeBounce'}/>
-            <Text>
+            <Text style={styles.message}>
               {this.props.message}
             </Text>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 };
 
 const styles = {
   view: {
-    backgroundColor: 'gold',
     flex: 1,
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -61,7 +67,13 @@ const styles = {
     flex: 1
   },
   logo: {
-    fontSize: 24
+    fontSize: 24,
+    color: 'white'
+  },
+  message: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center'
   }
 };
 

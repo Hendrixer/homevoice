@@ -7,29 +7,43 @@ import React, {
   AppRegistry,
   Component,
   Navigator,
+  StatusBar,
   StyleSheet,
-  Image,
-  DrawerLayoutAndroid,
-  Text,
   View
 } from 'react-native';
 import Splash from './app/containers/Splash';
 import Auth from './app/containers/Auth';
+import Home from './app/containers/Home';
 import { Provider } from 'react-redux';
 import store from './app/store/store';
 import * as routes from './app/utils/routes';
 import PageAnimation from './app/utils/pageAnimations';
 
 class App extends Component {
+  _createScene = (Component, route, nav) => {
+    return (
+      <View style={{flex: 1}}>
+        <StatusBar
+          translucent={true}
+          hidden={false}
+          backgroundColor={'transparent'}
+        />
+        <Component route={route} nav={nav} style={{flex: 1}}/>
+      </View>
+    );
+  };
   _renderScene = (route, navigator) => {
     if (route.name === routes.SPLASH) {
-      return <Splash route={route} nav={navigator}/>
+      return this._createScene(Splash, route, navigator);
 
     } else if (route.name === routes.AUTH) {
-      return <Auth route={route} nav={navigator}/>
+      return this._createScene(Auth, route, navigator);
+
+    } else if (route.name === routes.HOME) {
+      return this._createScene(Home, route, navigator);
 
     } else {
-      return <Splash route={route} nav={navigator}/>
+      return this._createScene(Splash, route, navigator);
     }
   };
 
@@ -38,26 +52,13 @@ class App extends Component {
   };
 
   render() {
-    const navView = (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={{textAlign: 'left', margin: 10, fontSize: 15}}>
-          Hello
-        </Text>
-      </View>
-    );
-
     return (
       <Provider store={store}>
-        <DrawerLayoutAndroid
-          drawerWidth={300}
-          drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navView}>
-          <Navigator
-            initialRoute={{name: routes.SPLASH, title: 'Main'}}
-            renderScene={this._renderScene}
-            configureScene={this._configureScene}
-          />
-        </DrawerLayoutAndroid>
+        <Navigator
+          initialRoute={{name: routes.SPLASH, title: 'Main'}}
+          renderScene={this._renderScene}
+          configureScene={this._configureScene}
+        />
       </Provider>
     );
   }

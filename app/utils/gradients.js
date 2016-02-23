@@ -12,6 +12,11 @@ export default {
       end: [0.5, 0]
     }
   },
-  redBlue: [colors.red['400'], colors.blue['900']],
-  blackBlue: ['#000', '#62609E']
+  america: [colors.red['400'], colors.blue['900']],
+  thunder: ['#000', '#62609E'],
+  apple: [colors.green[500], colors.blue[400]],
+  lightning: [
+    colors.blue[300],
+    colors.purple[900]
+  ]
 };
