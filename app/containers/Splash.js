@@ -19,18 +19,19 @@ class Splash extends Component {
   componentDidMount() {
     this.props.startSplash();
     const navigator = this.props.nav;
-    setTimeout(() => {
-      this.props.load_jwt()
-      .then(jwt => {
-        if (!jwt) {
-          navigator.push({
-            name: AUTH,
-            title: 'Sign in'
-          });
-        }
-      })
-      .done();
-    }, 3000);
+    // setTimeout(() => {
+
+    // }, 3000);
+    this.props.load_jwt()
+    .then(jwt => {
+      if (!jwt) {
+        navigator.replace({
+          name: AUTH,
+          title: 'Sign in'
+        });
+      }
+    })
+    .done();
   }
 
   render() {

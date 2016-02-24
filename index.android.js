@@ -9,7 +9,8 @@ import React, {
   Navigator,
   StatusBar,
   StyleSheet,
-  View
+  View,
+  BackAndroid
 } from 'react-native';
 import Splash from './app/containers/Splash';
 import Auth from './app/containers/Auth';
@@ -18,18 +19,23 @@ import { Provider } from 'react-redux';
 import store from './app/store/store';
 import * as routes from './app/utils/routes';
 import PageAnimation from './app/utils/pageAnimations';
+import Navbar from './app/components/Navbar';
 
 class App extends Component {
-  _createScene = (Component, route, nav) => {
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      if (this.navigator && this.navigator.getCurrentRoutes().length > 1) {
+        this.navigator.pop();
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  _createScene = (Page, route, nav) => {
     return (
-      <View style={{flex: 1}}>
-        <StatusBar
-          translucent={true}
-          hidden={false}
-          backgroundColor={'transparent'}
-        />
-        <Component route={route} nav={nav} style={{flex: 1}}/>
-      </View>
+      <Page route={route} nav={nav} style={{flex: 1}}/>
     );
   };
   _renderScene = (route, navigator) => {
@@ -54,11 +60,20 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Navigator
-          initialRoute={{name: routes.SPLASH, title: 'Main'}}
-          renderScene={this._renderScene}
-          configureScene={this._configureScene}
-        />
+        <View style={{flex: 1}}>
+          <StatusBar
+            translucent={true}
+            hidden={false}
+            backgroundColor={'transparent'}
+          />
+          <Navigator
+            style={{flex: 1}}
+            ref={nav => this.navigator = nav}
+            initialRoute={{name: routes.SPLASH, title: 'Main'}}
+            renderScene={this._renderScene}
+            configureScene={this._configureScene}
+          />
+        </View>
       </Provider>
     );
   }

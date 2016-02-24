@@ -18,5 +18,17 @@ export default {
   lightning: [
     colors.blue[300],
     colors.purple[900]
+  ],
+  glare: [
+    colors.blue[200],
+    colors.yellow[200]
+  ],
+  passion: [
+    colors.red[900],
+    colors.purple[900]
+  ],
+  pinkDust: [
+    colors.pink[200],
+    colors.blueGrey[500]
   ]
 };

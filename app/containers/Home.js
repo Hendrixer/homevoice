@@ -3,85 +3,103 @@ import React, {
   View,
   Text,
   StyleSheet,
+  ListView,
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import gradients from '../utils/gradients';
-import RadialMenu from 'react-native-radial-menu';
+import Banner from '../components/Banner';
+import Navbar from '../components/Navbar';
+import _ from 'lodash';
+import FrostBite from '../components/FrostBite';
+
 const screen = Dimensions.get('window');
+const iconMap = {
+  lights: 'lightbulb-outline',
+  switches: 'power',
+  contactSensors: 'touch-app',
+  locks: 'lock',
+  garages: 'directions-car',
+  locators: 'gps-fixed',
+  thermostats: 'ac-unit',
+  motionSensors: 'directions-walk'
+};
 
 class Home extends Component {
-  renderItems = (count) => {
-    return [...Array(count)].map((_, i) => {
-      return (
-        <View style={styles.item} key={i}
-          onSelect={() => {}}>
-          <Text>{i}</Text>
-        </View>
-      );
-    })
+  static defaultProps = {
+    devices: {}
+  };
+
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2});
+    const data = _.reduce(this.props.devices, (list, devices, type) => {
+      list.push({
+        type,
+        count: devices.length,
+        icon: iconMap[type]
+      })
+      return list;
+    });
+    this.state = {
+      dataSource: ds.cloneWithRows(data)
+    };
+  }
+  _renderRow = (deviceGroup, section, i) => {
+    const delay = i * 150;
+    return (<FrostBite animationDelay={delay} style={styles.item} icon={deviceGroup.icon}/>);
   };
 
   render() {
-    return(
+    return (
       <LinearGradient
-        style={styles.view}
-        colors={gradients.lightning}>
-        <RadialMenu
-        spreadAngle={360}
-        style={styles.menu}
-        itemRadius={60}
-        menuRadius={60}
-        startAngle={0}>
-          <View style={[styles.item, styles.root]}>
-            <Text>MENU</Text>
-          </View>
-          {this.renderItems(5)}
-        </RadialMenu>
+        style={[styles.view, this.props.style]}
+        colors={gradients.pinkDust}>
+        <Navbar />
+        <Banner style={styles.banner} message={'Devices'}/>
+        <ListView
+          pageSize={3}
+          initialListSize={12}
+          contentContainerStyle={styles.content}
+          dataSource={this.state.dataSource}
+          style={styles.scrollview}
+          renderRow={this._renderRow}>
+        </ListView>
       </LinearGradient>
     );
   }
 };
 
 const styles = StyleSheet.create({
-
   view: {
+    flex: 1
+  },
+  banner: {
     flex: 1,
-    borderRadius: 0,
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    height: screen.height / 4
   },
   item: {
-    height: 60,
-    width: 60,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#DDD'
+    width: screen.width / 4,
+    height: screen.width / 4,
+    margin: screen.width / 24
   },
-  root: {
-    backgroundColor: 'transparent'
+  scrollview: {
+    flex: 4
   },
-  menu: {
-    // width: screen.width,
-    // height: screen.height
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  container: {
-    flex: 1,
-    width: screen.width,
-    height: screen.height,
-    justifyContent: 'center',
+  content: {
+    marginTop: 30,
+    paddingTop: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   }
 });
 
 const selectState = (state, props) => {
   return {
-
+    devices: state.devices
   };
 };
 

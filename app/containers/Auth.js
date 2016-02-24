@@ -8,27 +8,25 @@ import React, {
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
-import Spinner from 'react-native-spinkit';
 import LinearGradient from 'react-native-linear-gradient';
 import gradients from '../utils/gradients';
-import Input from '../components/Input';
 import { update_form } from '../actions/actions';
 import Button from '../components/Button';
 import colors from 'material-colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { HOME } from '../utils/routes';
-
 const screen = Dimensions.get('window');
 
 class Auth extends Component {
   handleSubmit = () => {
-    this.props.nav.push({
+    this.props.nav.replace({
       name: HOME,
       title: 'Hello'
     });
   };
 
   render() {
+    const navbar = this.props.navbar;
     return(
       <LinearGradient
       style={styles.gradient}
