@@ -14,11 +14,11 @@ export default class FrostBit extends Component {
   static defaultProps = {
     height: 80,
     width: 80,
-    backgroundColor: 'rgba(245, 245, 245, 0.1)',
     icon: 'add',
     color: 'white',
     animated: true,
-    animationDelay: false
+    animationDelay: false,
+    label: ''
   };
 
   constructor(prop) {
@@ -49,7 +49,9 @@ export default class FrostBit extends Component {
       height: this.props.height,
       width: this.props.width,
       borderRadius: ((this.props.height * this.props.width) / 2) / 2,
-      backgroundColor: this.props.backgroundColor
+      backgroundColor: 'transparent',
+      borderColor: 'rgba(200, 200, 200, 0.1)',
+      borderWidth: 6,
     };
     return (
       <Animated.View
@@ -57,7 +59,7 @@ export default class FrostBit extends Component {
         opacity: this.opacity
       }]}>
         <Button
-        underColor={'rgba(245, 245, 245, 0.2)'}
+        underColor={'rgba(200, 200, 200, 0.1)'}
         containerStyle={[styles.view, _styles, this.props.style]}>
           <Icon
             name={this.props.icon}
@@ -66,6 +68,7 @@ export default class FrostBit extends Component {
             style={styles.icon}
           />
         </Button>
+        {this.props.label && <Text style={styles.label}>{this.props.label.toUpperCase()}</Text>}
       </Animated.View>
     );
   }
@@ -73,14 +76,17 @@ export default class FrostBit extends Component {
 
 const styles = StyleSheet.create({
   animation: {
-
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   view: {
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden'
   },
-  icon: {
-
+  label: {
+    color: 'white',
+    fontSize: 12,
+    textAlign: 'center'
   }
 });

@@ -48,7 +48,13 @@ class Home extends Component {
   }
   _renderRow = (deviceGroup, section, i) => {
     const delay = i * 150;
-    return (<FrostBite animationDelay={delay} style={styles.item} icon={deviceGroup.icon}/>);
+    return (<FrostBite
+              animationDelay={delay}
+              style={styles.item}
+              icon={deviceGroup.icon}
+              label={deviceGroup.type}
+            />
+    );
   };
 
   render() {
@@ -56,7 +62,7 @@ class Home extends Component {
       <LinearGradient
         style={[styles.view, this.props.style]}
         colors={gradients.pinkDust}>
-        <Navbar />
+        <Navbar title={'HomeVoice'}/>
         <Banner style={styles.banner} message={'Devices'}/>
         <ListView
           pageSize={3}
@@ -76,8 +82,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   banner: {
-    flex: 1,
-    height: screen.height / 4
+    height: 100
   },
   item: {
     width: screen.width / 4,
@@ -85,7 +90,7 @@ const styles = StyleSheet.create({
     margin: screen.width / 24
   },
   scrollview: {
-    flex: 4
+    flex: 1
   },
   content: {
     marginTop: 30,

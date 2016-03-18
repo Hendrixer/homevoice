@@ -37,11 +37,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginTop: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    padding: 15,
     width: Screen.width,
-    height: 60,
+    height: 45,
     backgroundColor: 'rgba(245, 245, 245, 0.3)',
   },
   content: {
